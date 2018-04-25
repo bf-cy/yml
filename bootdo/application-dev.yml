@@ -39,3 +39,18 @@ spring:
     connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
     # 合并多个DruidDataSource的监控数据
     #useGlobalDataSourceStat: true
+    
+    
+    application:
+    #name: springcloud-provider-config
+    name: bootdo
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:ampli@l-zy:8761/eureka,http://root:ampli@l-zy2:8762/eureka,http://root:ampli@l-zy3:8763/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    #appname: springcloud-provider-config
+    appname: bootdo
+    
