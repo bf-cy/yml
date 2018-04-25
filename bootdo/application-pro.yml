@@ -1,0 +1,100 @@
+
+bootdo:
+  uploadPath: /var/uploaded_files/
+logging:
+  level:
+    root: error
+    com.bootdo: info
+spring:
+  datasource:
+    type: com.alibaba.druid.pool.DruidDataSource
+    driverClassName: com.mysql.jdbc.Driver
+    url: jdbc:mysql://127.0.0.1:3306/bootdo?useUnicode=true&characterEncoding=utf8
+    username: root
+    password: root
+    initialSize: 1
+    minIdle: 3
+    maxActive: 20
+    # 配置获取连接等待超时的时间
+    maxWait: 60000
+    # 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒
+    timeBetweenEvictionRunsMillis: 60000
+    # 配置一个连接在池中最小生存的时间，单位是毫秒
+    minEvictableIdleTimeMillis: 30000
+    validationQuery: select 'x'
+    testWhileIdle: true
+    testOnBorrow: false
+    testOnReturn: false
+    # 打开PSCache，并且指定每个连接上PSCache的大小
+    poolPreparedStatements: true
+    maxPoolPreparedStatementPerConnectionSize: 20
+    # 配置监控统计拦截的filters，去掉后监控界面sql无法统计，'wall'用于防火墙
+    filters: stat,wall,slf4j
+    # 通过connectProperties属性来打开mergeSql功能；慢SQL记录
+    connectionProperties: druid.stat.mergeSql=true;druid.stat.slowSqlMillis=5000
+    # 合并多个DruidDataSource的监控数据
+    #useGlobalDataSourceStat: true
+  redis:
+      host: l-zy
+      port: 6379
+      password: efit
+      # 连接超时时间（毫秒）
+      timeout: 10000
+      pool:
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 10
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 100
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+  application:
+    #name: springcloud-provider-config
+    name: bootdo
+  redis:
+      host: l-zy
+      port: 6379
+      password: efit
+      # 连接超时时间（毫秒）
+      timeout: 10000
+      pool:
+        # 连接池中的最大空闲连接
+        max-idle: 8
+        # 连接池中的最小空闲连接
+        min-idle: 10
+        # 连接池最大连接数（使用负值表示没有限制）
+        max-active: 100
+        # 连接池最大阻塞等待时间（使用负值表示没有限制）
+        max-wait: -1
+  cloud:
+    config:
+      #config-server的配置，不需要硬编码config-server的地址，使用service-id去eureka-server获取cong-server的地址
+      discovery:
+        enabled: true
+        service-id: springcloud-config-server
+      fail-fast: true
+      username: root
+      password: ampli
+      profile: dev
+      server:
+        git:
+          # 配置git仓库的地址
+          uri: https://lzy@git/r/ampli.git
+          # git仓库地址下的相对地址，可以配置多个，用,分割。
+          search-paths:  /src/main/resources
+          #版本
+          branch: master
+          # git仓库的账号
+          username: lzy
+          # git仓库的密码
+          password: 1qaz2wsx
+eureka:
+  client:
+    service-url:
+      defaultZone: http://root:ampli@l-zy:8761/eureka,http://root:ampli@l-zy2:8762/eureka,http://root:ampli@l-zy3:8763/eureka
+  instance:
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    #appname: springcloud-provider-config
+    appname: bootdo
