@@ -10,7 +10,9 @@ logging:
   level:
     root: info
     com.bootdo: debug
-spring:
+spring: 
+  application: 
+    name: bootdo
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver

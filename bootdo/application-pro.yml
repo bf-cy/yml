@@ -13,6 +13,8 @@ logging:
     root: error
     com.bootdo: info
 spring:
+  application: 
+    name: bootdo
   datasource:
     type: com.alibaba.druid.pool.DruidDataSource
     driverClassName: com.mysql.jdbc.Driver
