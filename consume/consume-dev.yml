@@ -1,0 +1,22 @@
+server: 
+  port: 8083
+spring: 
+  application: 
+    name: consume
+  cloud: 
+    config: 
+      discovery: 
+        enabled: true
+        service-id: springcloud-config-server
+      fail-fast: true
+      username: root
+      password: ampli
+      profile: dev
+eureka: 
+  client: 
+    service-url: 
+      defaultZone: http://root:ampli@l-zy:8761/eureka,http://root:ampli@l-zy2:8762/eureka,http://root:ampli@l-zy3:8763/eureka
+  instance: 
+    prefer-ip-address: true
+    instance-id: ${spring.application.name}:${spring.cloud.client.ipAddress}:${spring.application.instance_id:${server.port}}
+    appname: consume
